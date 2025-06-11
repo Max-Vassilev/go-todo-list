@@ -22,8 +22,8 @@ func showTasks(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(writer, "My tasks:")
 	fmt.Fprintln(writer)
 
-	for _, task := range tasks {
-		fmt.Fprintln(writer, task)
+	for index, task := range tasks {
+    	fmt.Fprintf(writer, "%d. %s\n", index+1, task)
 	}
 }
 
