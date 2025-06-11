@@ -5,12 +5,18 @@ import (
 	"net/http"
 )
 
-var tasks = []string{"Buy groceries", "Complete Go tutorial", "Call Alex"}
+var tasks = []string{}
 
 func main() {
+	http.HandleFunc("/", serveIndex)
 	http.HandleFunc("/tasks", showTasks)
 	http.HandleFunc("/add-task", addTask)
+
 	http.ListenAndServe(":8080", nil)
+}
+
+func serveIndex(writer http.ResponseWriter, request *http.Request) {
+	http.ServeFile(writer, request, "index.html")
 }
 
 func showTasks(writer http.ResponseWriter, request *http.Request) {
@@ -23,7 +29,7 @@ func showTasks(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(writer)
 
 	for index, task := range tasks {
-    	fmt.Fprintf(writer, "%d. %s\n", index+1, task)
+		fmt.Fprintf(writer, "%d. %s\n", index+1, task)
 	}
 }
 
